@@ -4,7 +4,7 @@
 #include "syscall.h"
 
 #include <stddef.h>
-///////////////////
+
 void *memcpy(void *dest, const void *src, size_t n);
 
 int strcmp(const char *a, const char *b) __attribute__ ((naked));
@@ -1041,7 +1041,11 @@ mq_writable (struct pipe_ringbuffer *pipe,
 	}
 	return 1;
 }
-
+void strlen_task()
+{
+	int length = strlen("hello");
+	while (1)
+}
 int
 fifo_write (struct pipe_ringbuffer *pipe,
 			struct task_control_block *task)
