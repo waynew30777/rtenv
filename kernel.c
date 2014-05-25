@@ -157,7 +157,7 @@ struct user_thread_stack {
 	unsigned int r10;
 	unsigned int fp;
 	unsigned int _lr;	/* Back to system calls or return exception */
-	unsigned int _r7;	/* Backup from isr */
+	unsigned int _r8;	/* Backup from isr */
 	unsigned int r0;
 	unsigned int r1;
 	unsigned int r2;
@@ -1219,7 +1219,7 @@ int main()
 		tasks[current_task].status = TASK_READY;
 		timeup = 0;
 
-		switch (tasks[current_task].stack->r7) {
+		switch (tasks[current_task].stack->r8) {
 		case 0x1: /* fork */
 			if (task_count == TASK_LIMIT) {
 				/* Cannot create a new task, return error */
@@ -1303,8 +1303,8 @@ int main()
 			}
 			break;
 		default: /* Catch all interrupts */
-			if ((int)tasks[current_task].stack->r7 < 0) {
-				unsigned int intr = -tasks[current_task].stack->r7 - 16;
+			if ((int)tasks[current_task].stack->r8 < 0) {
+				unsigned int intr = -tasks[current_task].stack->r8 - 16;
 
 				if (intr == SysTick_IRQn) {
 					/* Never disable timer. We need it for pre-emption */
